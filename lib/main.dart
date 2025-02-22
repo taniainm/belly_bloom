@@ -76,7 +76,7 @@ class HalamanSatu extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 40,
                               fontWeight: FontWeight.bold,
-                              color: Color.fromRGBO(247, 207, 216, 1),
+                              color: Color.fromRGBO(223, 138, 158, 1),
                             ),
                           ),
                         ),
@@ -134,7 +134,8 @@ class HalamanSatu extends StatelessWidget {
                           child: Text(
                             'Login',
                             style: TextStyle(
-                                color: const Color.fromARGB(255, 28, 56, 104)),
+                                color: const Color.fromARGB(255, 28, 56, 104),
+                                fontSize: 30),
                           ),
                         ),
                         SizedBox(height: 20),
