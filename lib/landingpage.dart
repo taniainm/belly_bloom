@@ -59,7 +59,7 @@ class LandingPage extends StatelessWidget {
                                 fontSize: 30,
                               ),
                             ),
-                            SizedBox(width: 30), // Jarak antara teks dan ikon
+                            SizedBox(width: 20), // Jarak antara teks dan ikon
                             Icon(
                               Icons.arrow_forward,
                               color: const Color.fromARGB(255, 28, 56, 104),
