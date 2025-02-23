@@ -1,12 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MaterialApp(
-    title: 'BellyBloom',
-    home: HalamanSatu(),
-  ));
-}
-
 class HalamanSatu extends StatelessWidget {
   const HalamanSatu({super.key});
 
