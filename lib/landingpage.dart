@@ -3,10 +3,11 @@ import 'package:belly_bloom/login.dart';
 
 void main() {
   runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
     title: 'BellyBloom',
     home: LandingPage(),
     routes: <String, WidgetBuilder>{
-      '/login': (BuildContext context) => HalamanSatu(),
+      '/login': (BuildContext context) => HalamanSatu()
     },
   ));
 }

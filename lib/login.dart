@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'signup.dart';
 
 class HalamanSatu extends StatelessWidget {
   const HalamanSatu({super.key});
@@ -15,7 +16,7 @@ class HalamanSatu extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: Padding(
                   padding: EdgeInsets.only(
-                      top: constraints.maxHeight * 0.15, left: 20),
+                      top: constraints.maxHeight * 0.09, left: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
@@ -59,11 +60,10 @@ class HalamanSatu extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         const Align(
-                          alignment:
-                              Alignment.centerLeft, // Posisi teks di kiri
+                          alignment: Alignment.center, // Posisi teks di kiri
                           child: Text(
                             'Login',
                             style: TextStyle(
@@ -127,7 +127,7 @@ class HalamanSatu extends StatelessWidget {
                           child: Text(
                             'Login',
                             style: TextStyle(
-                                color: const Color.fromARGB(255, 28, 56, 104),
+                                color: const Color.fromRGBO(28, 56, 104, 1),
                                 fontSize: 30),
                           ),
                         ),
@@ -138,10 +138,13 @@ class HalamanSatu extends StatelessWidget {
                             Text("Don't have an account? "),
                             GestureDetector(
                               onTap: () {
-                                // Navigate to sign in page
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SignUpPage()));
                               },
                               child: Text(
-                                'Sign in',
+                                'Sign up',
                                 style: TextStyle(
                                   color: const Color.fromARGB(255, 28, 56, 104),
                                   fontWeight: FontWeight.bold,
