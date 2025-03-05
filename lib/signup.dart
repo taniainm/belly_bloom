@@ -1,3 +1,4 @@
+import 'package:belly_bloom/biodata.dart';
 import 'package:flutter/material.dart';
 
 class SignUpPage extends StatelessWidget {
@@ -92,7 +93,10 @@ class SignUpPage extends StatelessWidget {
                       SizedBox(height: 50),
                       ElevatedButton(
                         onPressed: () {
-                          // Handle sign up
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => BiodataPage()));
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color.fromRGBO(247, 207, 216, 1),

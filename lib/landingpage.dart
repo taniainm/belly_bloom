@@ -35,7 +35,7 @@ class LandingPage extends StatelessWidget {
                         width: 300,
                         height: 300,
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 100),
                       ElevatedButton(
                         onPressed: () {
                           Navigator.pushNamed(context, '/login');
