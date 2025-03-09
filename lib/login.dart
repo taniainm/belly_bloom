@@ -12,6 +12,12 @@ class HalamanSatu extends StatelessWidget {
         builder: (context, constraints) {
           return Stack(
             children: [
+              Positioned.fill(
+                child: Image.asset(
+                  "img/background.png",
+                  fit: BoxFit.cover,
+                ),
+              ),
               Align(
                 alignment: Alignment.topLeft,
                 child: Padding(
@@ -51,19 +57,20 @@ class HalamanSatu extends StatelessWidget {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     color: const Color.fromRGBO(
-                        255, 254, 202, 0.9), // Warna kuning
+                        255, 255, 242, 0.72), // Warna kuning
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(50), // Lengkungan di atas kiri
                       topRight: Radius.circular(50), // Lengkungan di atas kanan
                     ),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.only(
+                        top: 40.0, bottom: 20, left: 20, right: 20),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         const Align(
-                          alignment: Alignment.center, // Posisi teks di kiri
+                          alignment: Alignment.center,
                           child: Text(
                             'Login',
                             style: TextStyle(
@@ -73,7 +80,7 @@ class HalamanSatu extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 20),
+                        SizedBox(height: 30),
                         TextField(
                           decoration: InputDecoration(
                             labelText: 'Email',
@@ -86,7 +93,7 @@ class HalamanSatu extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 20),
+                        SizedBox(height: 30),
                         TextField(
                           obscureText: true,
                           decoration: InputDecoration(
@@ -100,7 +107,7 @@ class HalamanSatu extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10),
+                        SizedBox(height: 5),
                         Align(
                           alignment: Alignment.centerRight,
                           child: TextButton(
@@ -110,7 +117,7 @@ class HalamanSatu extends StatelessWidget {
                             child: Text('Forget password?'),
                           ),
                         ),
-                        SizedBox(height: 20),
+                        SizedBox(height: 50),
                         ElevatedButton(
                           onPressed: () {
                             // Handle login

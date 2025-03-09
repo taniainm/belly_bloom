@@ -18,11 +18,16 @@ class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(255, 254, 202, 0.9),
       body: LayoutBuilder(
         builder: (context, constraints) {
           return Stack(
             children: [
+              Positioned.fill(
+                child: Image.asset(
+                  "img/background.png",
+                  fit: BoxFit.cover,
+                ),
+              ),
               Align(
                 alignment: Alignment.center,
                 child: Padding(

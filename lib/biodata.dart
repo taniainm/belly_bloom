@@ -7,9 +7,14 @@ class BiodataPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(247, 207, 216, 1),
       body: LayoutBuilder(builder: (context, constraints) {
         return Stack(children: [
+          Positioned.fill(
+            child: Image.asset(
+              "img/background.png",
+              fit: BoxFit.cover,
+            ),
+          ),
           Align(
             alignment: Alignment.topLeft,
             child: Padding(
@@ -32,7 +37,7 @@ class BiodataPage extends StatelessWidget {
                 height: constraints.maxHeight * 0.60,
                 width: constraints.maxWidth * 0.90,
                 decoration: BoxDecoration(
-                  color: const Color.fromRGBO(255, 254, 202, 0.9),
+                  color: const Color.fromRGBO(255, 255, 242, 0.72),
                   borderRadius: const BorderRadius.all(Radius.circular(50)),
                 ),
                 child: Padding(
