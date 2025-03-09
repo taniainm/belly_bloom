@@ -111,12 +111,14 @@ class BiodataPage extends StatelessWidget {
                           minimumSize:
                               Size(double.infinity, 40), // Full width button
                         ),
-                        child: Text(
-                          'Lanjutkan',
-                          style: TextStyle(
-                              color: const Color.fromRGBO(28, 56, 104, 1),
-                              fontSize: 20),
-                        ),
+                        child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              'Lanjutkan',
+                              style: TextStyle(
+                                  color: const Color.fromRGBO(71, 77, 144, 1),
+                                  fontSize: 20),
+                            )),
                       )
                     ],
                   ),
