@@ -99,7 +99,7 @@ class BiodataPage extends StatelessWidget {
                           },
                         ),
                       ),
-                      SizedBox(height: 120),
+                      SizedBox(height: 80),
                       ElevatedButton(
                         onPressed: () {
                           Navigator.push(

@@ -6,7 +6,7 @@ import 'signup.dart';
 void main() {
   runApp(MaterialApp(
     title: 'BellyBloom',
-    home: LandingPage(),
+    home: SplashScreen(),
     routes: <String, WidgetBuilder>{
       '/login': (BuildContext context) => HalamanSatu(),
       '/signup': (BuildContext context) => SignUpPage(),

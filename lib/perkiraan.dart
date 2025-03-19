@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'home.dart';
 
 class PerkiraanPage extends StatelessWidget {
   const PerkiraanPage({super.key});
@@ -82,13 +83,13 @@ class PerkiraanPage extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SizedBox(height: 220),
+                          SizedBox(height: 180),
                           ElevatedButton(
                             onPressed: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => PerkiraanPage()));
+                                      builder: (context) => HomePage()));
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:

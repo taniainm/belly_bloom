@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'home.dart';
 import 'signup.dart';
 
 class HalamanSatu extends StatelessWidget {
@@ -7,7 +8,6 @@ class HalamanSatu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(247, 207, 216, 1),
       body: LayoutBuilder(
         builder: (context, constraints) {
           return Stack(
@@ -120,7 +120,10 @@ class HalamanSatu extends StatelessWidget {
                         SizedBox(height: 50),
                         ElevatedButton(
                           onPressed: () {
-                            // Handle login
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomePage()));
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor:

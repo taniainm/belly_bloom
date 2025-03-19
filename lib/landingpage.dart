@@ -5,15 +5,31 @@ void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     title: 'BellyBloom',
-    home: LandingPage(),
+    home: SplashScreen(),
     routes: <String, WidgetBuilder>{
       '/login': (BuildContext context) => HalamanSatu()
     },
   ));
 }
 
-class LandingPage extends StatelessWidget {
-  const LandingPage({super.key});
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Tunggu 3 detik lalu navigasi ke LandingPage
+    Future.delayed(Duration(seconds: 5), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HalamanSatu()),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,58 +39,21 @@ class LandingPage extends StatelessWidget {
           return Stack(
             children: [
               Positioned.fill(
-                child: Image.asset(
-                  "img/background.png",
-                  fit: BoxFit.cover,
-                ),
-              ),
+                  child: Opacity(
+                opacity: 0.7,
+                child: Image.asset("img/bgLanding.png", fit: BoxFit.cover),
+              )),
               Align(
                 alignment: Alignment.center,
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        "img/LogoBellyBloom.png",
-                        width: 300,
-                        height: 300,
-                      ),
-                      SizedBox(height: 100),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/login');
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromRGBO(247, 207, 216, 1),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                          ),
-                          minimumSize:
-                              Size(double.infinity, 50), // Full width button
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment
-                              .center, // Pusatkan elemen dalam Row
-                          children: [
-                            Text(
-                              'Start',
-                              style: TextStyle(
-                                color: const Color.fromARGB(255, 28, 56, 104),
-                                fontSize: 30,
-                              ),
-                            ),
-                            SizedBox(width: 20), // Jarak antara teks dan ikon
-                            Icon(
-                              Icons.arrow_forward,
-                              color: const Color.fromARGB(255, 28, 56, 104),
-                              size: 30,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Image.asset(
+                      "img/LogoBellyBloom.png",
+                      width: 300,
+                      height: 300,
+                    ),
                   ),
                 ),
               ),
