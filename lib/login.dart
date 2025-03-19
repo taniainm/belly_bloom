@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'signup.dart';
+import 'utama.dart';
 
 class HalamanSatu extends StatelessWidget {
   const HalamanSatu({super.key});
@@ -22,7 +23,7 @@ class HalamanSatu extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: Padding(
                   padding: EdgeInsets.only(
-                      top: constraints.maxHeight * 0.09, left: 20),
+                      top: constraints.maxHeight * 0.13, left: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
@@ -120,7 +121,10 @@ class HalamanSatu extends StatelessWidget {
                         SizedBox(height: 50),
                         ElevatedButton(
                           onPressed: () {
-                            // Handle login
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PregnancyTracker()));
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor:

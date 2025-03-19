@@ -65,6 +65,14 @@ flutter:
   assets :
   - img/LogoBellyBloom.png
   - img/background.png
+  - img/bgLanding.png
+  - img/wp.png
+  - img/buah.png
+  - img/ava.png
+  - img/kaki.png
+  - img/skincare.png
+  - img/health.png
+  - img/vitamin.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

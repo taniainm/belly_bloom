@@ -23,11 +23,10 @@ class LandingPage extends StatelessWidget {
           return Stack(
             children: [
               Positioned.fill(
-                child: Image.asset(
-                  "img/background.png",
-                  fit: BoxFit.cover,
-                ),
-              ),
+                  child: Opacity(
+                opacity: 0.7,
+                child: Image.asset("img/bgLanding.png", fit: BoxFit.cover),
+              )),
               Align(
                 alignment: Alignment.center,
                 child: Padding(

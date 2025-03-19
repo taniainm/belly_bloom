@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'utama.dart';
 
 class PerkiraanPage extends StatelessWidget {
   const PerkiraanPage({super.key});
@@ -39,7 +40,7 @@ class PerkiraanPage extends StatelessWidget {
                     borderRadius: const BorderRadius.all(Radius.circular(50)),
                   ),
                   child: Padding(
-                      padding: const EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.only(top:30, left: 20, right: 20),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -48,12 +49,12 @@ class PerkiraanPage extends StatelessWidget {
                             child: Text(
                                 'Pilih bagaimana Anda ingin memperkirakan tanggal persalinan Anda',
                                 style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 21,
                                   fontWeight: FontWeight.normal,
                                   color: const Color.fromRGBO(71, 77, 144, 1),
                                 )),
                           ),
-                          SizedBox(height: 15),
+                          SizedBox(height: 25),
                           Align(
                             alignment: Alignment.center,
                             child: Padding(
@@ -88,7 +89,7 @@ class PerkiraanPage extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => PerkiraanPage()));
+                                      builder: (context) => PregnancyTracker()));
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
