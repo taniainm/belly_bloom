@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'home.dart';
 import 'signup.dart';
+import 'utama.dart';
 
 class HalamanSatu extends StatelessWidget {
   const HalamanSatu({super.key});
@@ -123,7 +123,7 @@ class HalamanSatu extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomePage()));
+                                    builder: (context) => PregnancyTracker()));
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor:

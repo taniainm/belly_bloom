@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'home.dart';
+import 'utama.dart';
 
 class PerkiraanPage extends StatelessWidget {
   const PerkiraanPage({super.key});
@@ -89,7 +89,8 @@ class PerkiraanPage extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => HomePage()));
+                                      builder: (context) =>
+                                          PregnancyTracker()));
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
