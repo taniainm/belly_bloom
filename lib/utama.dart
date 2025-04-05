@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'artikel.dart';
 import 'momhealth.dart';
 import 'profil.dart';
+import 'skincare.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,11 +31,6 @@ class _PregnancyTrackerState extends State<PregnancyTracker> {
 
   void _onItemTapped(int index) {
     if (index == 0) {
-      // Home
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => PregnancyTracker()),
-      );
     } else if (index == 1) {
     } else if (index == 2) {
       Navigator.push(
@@ -107,7 +103,12 @@ class _PregnancyTrackerState extends State<PregnancyTracker> {
 
                   // Skincare
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SkincarePage()),
+                      );
+                    },
                     child: Container(
                       width: 330,
                       margin: EdgeInsets.symmetric(vertical: 15),

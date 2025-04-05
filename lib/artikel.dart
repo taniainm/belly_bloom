@@ -273,26 +273,48 @@ class BookmarkedArticlesScreen extends StatelessWidget {
   }
 }
 
-class ArticleDetailScreen extends StatelessWidget {
+class ArticleDetailScreen extends StatefulWidget {
   final Map<String, String> article;
-
   const ArticleDetailScreen({Key? key, required this.article})
       : super(key: key);
 
   @override
+  State<ArticleDetailScreen> createState() => _ArticleDetailScreenState();
+}
+
+class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
+  List<Map<String, String>> bookmarkedArticles = [];
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: Icon(Icons.bookmark),
+            onPressed: () {
+              setState(() {
+                if (bookmarkedArticles.contains(widget.article)) {
+                  bookmarkedArticles.remove(widget.article);
+                } else {
+                  bookmarkedArticles.add(widget.article);
+                }
+              });
+            },
+          ),
+        ],
+      ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(article["title"]!,
+            Text(widget.article["title"]!,
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-            Image.asset(article["image"]!, height: 200, width: double.infinity),
+            Image.asset(widget.article["image"]!,
+                height: 200, width: double.infinity),
             SizedBox(height: 16.0),
-            Text(article["content"]!, style: TextStyle(fontSize: 16)),
+            Text(widget.article["content"]!, style: TextStyle(fontSize: 16)),
           ],
         ),
       ),

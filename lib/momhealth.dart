@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-import 'berat.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 main() {
   runApp(MaterialApp(
@@ -37,11 +36,15 @@ class _HealthScreenState extends State<HealthScreen> {
   }
 
   void _updateBloodPressure() async {
-    String? newBP = await _showInputDialog("Masukkan Tekanan Darah", "mmHg");
-    if (newBP != null && newBP.isNotEmpty) {
+    final newBP = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => BloodPressureInputPage()),
+    );
+
+    if (newBP != null && newBP is List<int>) {
       setState(() {
-        _bloodPressure = "$newBP mmHg";
-        _addToHistory("Tekanan Darah", newBP);
+        _bloodPressure = "${newBP[0]}/${newBP[1]} mmHg";
+        _addToHistory("Tekanan Darah", "${newBP[0]}/${newBP[1]}");
       });
     }
   }
@@ -70,31 +73,6 @@ class _HealthScreenState extends State<HealthScreen> {
     setState(() {
       _history.insert(0, newRecord);
     });
-  }
-
-  Future<String?> _showInputDialog(String title, String unit) async {
-    TextEditingController _controller = TextEditingController();
-    return showDialog<String>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(title),
-        content: TextField(
-          controller: _controller,
-          keyboardType: TextInputType.number,
-          decoration: InputDecoration(hintText: "Contoh: 70"),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, null),
-            child: Text("Batal"),
-          ),
-          ElevatedButton(
-            onPressed: () => Navigator.pop(context, _controller.text),
-            child: Text("Simpan"),
-          ),
-        ],
-      ),
-    );
   }
 
   @override
@@ -226,6 +204,392 @@ class HealthCard extends StatelessWidget {
               child: Text(buttonText),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class BloodPressureTrackerScreen extends StatefulWidget {
+  const BloodPressureTrackerScreen({super.key});
+  @override
+  _BloodPressureTrackerScreenState createState() =>
+      _BloodPressureTrackerScreenState();
+}
+
+class _BloodPressureTrackerScreenState
+    extends State<BloodPressureTrackerScreen> {
+  int lastSystolic = 0;
+  int lastDiastolic = 0;
+  List<FlSpot> systolicHistory = [];
+  List<FlSpot> diastolicHistory = [];
+  List<String> dates = [];
+
+  void _navigateToInputPage() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => BloodPressureInputPage()),
+    );
+
+    if (result != null && result is List<int>) {
+      setState(() {
+        lastSystolic = result[0];
+        lastDiastolic = result[1];
+        DateTime now = DateTime.now();
+        String formattedDate = DateFormat('dd/MM').format(now);
+        dates.add(formattedDate);
+        systolicHistory.add(
+            FlSpot(systolicHistory.length.toDouble(), lastSystolic.toDouble()));
+        diastolicHistory.add(FlSpot(
+            diastolicHistory.length.toDouble(), lastDiastolic.toDouble()));
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.blue[50],
+      appBar: AppBar(title: Text("Pantau Tekanan Darah")),
+      body: Column(
+        children: [
+          SizedBox(height: 20),
+          Text(
+            "Tekanan Darah Terakhir:",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          Text(
+            lastSystolic > 0 && lastDiastolic > 0
+                ? "$lastSystolic/$lastDiastolic mmHg"
+                : "Belum ada data",
+            style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.redAccent),
+          ),
+          SizedBox(height: 20),
+          Expanded(
+            child: dates.isNotEmpty
+                ? BloodPressureChart(systolicHistory, diastolicHistory, dates)
+                : Center(child: Text("Belum ada riwayat tekanan darah")),
+          ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: _navigateToInputPage,
+            child: Text("Tambah Data Tekanan Darah"),
+          ),
+          SizedBox(height: 20),
+        ],
+      ),
+    );
+  }
+}
+
+class WeightTrackerScreen extends StatefulWidget {
+  const WeightTrackerScreen({super.key});
+  @override
+  _WeightTrackerScreenState createState() => _WeightTrackerScreenState();
+}
+
+class _WeightTrackerScreenState extends State<WeightTrackerScreen> {
+  double currentWeight = 0.0;
+  bool isEditing = false;
+  TextEditingController _weightController = TextEditingController();
+  List<FlSpot> weightHistory = [];
+  List<String> weightDates = [];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.blue[50],
+      appBar: AppBar(title: Text("Masukkan Berat Badan")),
+      body: Column(
+        children: [
+          SizedBox(height: 20),
+          Text(
+            "Masukkan Berat Badan",
+            style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.pinkAccent),
+          ),
+          SizedBox(height: 10),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                isEditing = !isEditing;
+              });
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              decoration: BoxDecoration(
+                color: Colors.blue[100],
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "${currentWeight.toStringAsFixed(1)} Kg",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(width: 10),
+                  Icon(Icons.edit, color: Colors.black54),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: 10),
+          Text(
+            "Riwayat",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          Text("Penambahan berat badan"),
+          SizedBox(height: 5),
+          Expanded(
+            child: weightHistory.isNotEmpty
+                ? WeightChart(weightHistory, weightDates)
+                : Center(child: Text("Belum ada riwayat berat badan")),
+          ),
+          if (isEditing)
+            AnimatedContainer(
+              duration: Duration(milliseconds: 300),
+              height: isEditing ? 250 : 0,
+              child: Column(
+                children: [
+                  SizedBox(height: 10),
+                  CalendarHorizontal(),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: TextField(
+                      controller: _weightController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: "Berat (Kg)",
+                        hintText: "Masukkan berat badan",
+                      ),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_weightController.text.isNotEmpty) {
+                        setState(() {
+                          currentWeight = double.parse(_weightController.text);
+                          isEditing = false;
+                          DateTime now = DateTime.now();
+                          String formattedDate =
+                              DateFormat('dd/MM').format(now);
+                          weightDates.add(formattedDate);
+                          weightHistory.add(FlSpot(
+                              weightHistory.length.toDouble(), currentWeight));
+                          Navigator.pop(context, currentWeight.toString());
+                        });
+                      }
+                    },
+                    child: Text("Simpan"),
+                  ),
+                ],
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class CalendarHorizontal extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    DateTime now = DateTime.now();
+    return Container(
+      height: 60,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: 7,
+        itemBuilder: (context, index) {
+          DateTime date = now.subtract(Duration(days: 6 - index));
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Column(
+              children: [
+                Text(DateFormat("EEE").format(date)),
+                CircleAvatar(
+                  backgroundColor:
+                      date.day == now.day ? Colors.purple : Colors.transparent,
+                  child: Text(
+                    date.day.toString(),
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class WeightChart extends StatelessWidget {
+  final List<FlSpot> weightData;
+  final List<String> weightDates;
+  WeightChart(this.weightData, this.weightDates);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(8),
+      child: SizedBox(
+        height: 150,
+        child: LineChart(
+          LineChartData(
+            gridData: FlGridData(show: true),
+            titlesData: FlTitlesData(
+              leftTitles: AxisTitles(
+                sideTitles: SideTitles(
+                    showTitles: true,
+                    reservedSize: 40,
+                    getTitlesWidget: (value, meta) {
+                      return Text("${value.toStringAsFixed(1)} Kg",
+                          style: TextStyle(fontSize: 12));
+                    }),
+              ),
+              bottomTitles: AxisTitles(
+                sideTitles: SideTitles(
+                    showTitles: true,
+                    reservedSize: 30,
+                    getTitlesWidget: (value, meta) {
+                      if (value.toInt() >= 0 &&
+                          value.toInt() < weightDates.length) {
+                        return Text(weightDates[value.toInt()],
+                            style: TextStyle(fontSize: 12));
+                      }
+                      return Text("");
+                    }),
+              ),
+            ),
+            borderData: FlBorderData(show: true),
+            lineBarsData: [
+              LineChartBarData(
+                spots: weightData,
+                isCurved: true,
+                color: Colors.blueAccent,
+                dotData: FlDotData(show: true),
+                belowBarData: BarAreaData(show: false),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class BloodPressureInputPage extends StatefulWidget {
+  @override
+  _BloodPressureInputPageState createState() => _BloodPressureInputPageState();
+}
+
+class _BloodPressureInputPageState extends State<BloodPressureInputPage> {
+  TextEditingController systolicController = TextEditingController();
+  TextEditingController diastolicController = TextEditingController();
+
+  void _saveData() {
+    if (systolicController.text.isNotEmpty &&
+        diastolicController.text.isNotEmpty) {
+      int systolic = int.parse(systolicController.text);
+      int diastolic = int.parse(diastolicController.text);
+
+      // Kirim data tekanan darah ke layar sebelumnya
+      Navigator.pop(context, [systolic, diastolic]);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Masukkan Tekanan Darah")),
+      body: Padding(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          children: [
+            TextField(
+              controller: systolicController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(labelText: "Sistole (atas)"),
+            ),
+            TextField(
+              controller: diastolicController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(labelText: "Diastole (bawah)"),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(onPressed: _saveData, child: Text("Simpan")),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class BloodPressureChart extends StatelessWidget {
+  final List<FlSpot> systolicData;
+  final List<FlSpot> diastolicData;
+  final List<String> dates;
+  BloodPressureChart(this.systolicData, this.diastolicData, this.dates);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(8),
+      child: SizedBox(
+        height: 200,
+        child: LineChart(
+          LineChartData(
+            gridData: FlGridData(show: true),
+            titlesData: FlTitlesData(
+              leftTitles: AxisTitles(
+                sideTitles: SideTitles(
+                  showTitles: true,
+                  reservedSize: 40,
+                  getTitlesWidget: (value, meta) {
+                    return Text("${value.toInt()} mmHg",
+                        style: TextStyle(fontSize: 12));
+                  },
+                ),
+              ),
+              bottomTitles: AxisTitles(
+                sideTitles: SideTitles(
+                  showTitles: true,
+                  reservedSize: 30,
+                  getTitlesWidget: (value, meta) {
+                    if (value.toInt() >= 0 && value.toInt() < dates.length) {
+                      return Text(dates[value.toInt()],
+                          style: TextStyle(fontSize: 12));
+                    }
+                    return Text("");
+                  },
+                ),
+              ),
+            ),
+            borderData: FlBorderData(show: true),
+            lineBarsData: [
+              LineChartBarData(
+                spots: systolicData,
+                isCurved: true,
+                color: Colors.blueAccent,
+                dotData: FlDotData(show: true),
+                belowBarData: BarAreaData(show: false),
+              ),
+              LineChartBarData(
+                spots: diastolicData,
+                isCurved: true,
+                color: Colors.redAccent,
+                dotData: FlDotData(show: true),
+                belowBarData: BarAreaData(show: false),
+              ),
+            ],
+          ),
         ),
       ),
     );
