@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'datacatatan.dart';
 import 'utama.dart';
 
 void main(List<String> args) {
@@ -96,6 +97,11 @@ class _ArticleScreenState extends State<ArticleScreen> {
         MaterialPageRoute(builder: (context) => PregnancyTracker()),
       );
     } else if (index == 1) {
+      // Catatan
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => CatatanPage()),
+      );
     } else if (index == 2) {
       // VitaMil
       Navigator.push(

@@ -68,7 +68,9 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets :
+  - img/informasi.png
   - img/skin.jpg
+  - img/buah.jpg
   - img/LogoBellyBloom.png
   - img/background.png
   - img/bgLanding.png

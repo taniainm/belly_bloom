@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'artikel.dart';
+import 'datacatatan.dart';
 import 'momhealth.dart';
+import 'perkembangan.dart';
 import 'profil.dart';
+import 'provitamil.dart';
 import 'skincare.dart';
 
 void main() {
@@ -31,7 +34,15 @@ class _PregnancyTrackerState extends State<PregnancyTracker> {
 
   void _onItemTapped(int index) {
     if (index == 0) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => PregnancyTracker()),
+      );
     } else if (index == 1) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => CatatanPage()),
+      );
     } else if (index == 2) {
       Navigator.push(
         context,
@@ -231,7 +242,12 @@ class _PregnancyTrackerState extends State<PregnancyTracker> {
 
                   // VitaMil
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MedicinePage()),
+                      );
+                    },
                     child: Container(
                       width: 330,
                       margin: EdgeInsets.symmetric(vertical: 15),
@@ -373,7 +389,14 @@ class FruitImageCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => InfoDialog(),
+                      ),
+                    );
+                  },
                   child: Row(
                     children: [
                       Text("Buka"),
