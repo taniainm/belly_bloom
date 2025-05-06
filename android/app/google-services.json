@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "828296953658",
+    "firebase_url": "https://bellybloom-f895a-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "bellybloom-f895a",
+    "storage_bucket": "bellybloom-f895a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:828296953658:android:c19854f28821d877cf9a03",
+        "android_client_info": {
+          "package_name": "com.example.belly_bloom"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOM2l4DDTotQVBABSf7arniqGN8lk4qSw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

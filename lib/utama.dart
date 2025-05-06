@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'artikel.dart';
 import 'datacatatan.dart';
@@ -7,20 +9,6 @@ import 'perkembangan.dart';
 import 'profil.dart';
 import 'provitamil.dart';
 import 'skincare.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: PregnancyTracker(),
-    );
-  }
-}
 
 class PregnancyTracker extends StatefulWidget {
   const PregnancyTracker({Key? key}) : super(key: key);
@@ -31,6 +19,47 @@ class PregnancyTracker extends StatefulWidget {
 class _PregnancyTrackerState extends State<PregnancyTracker> {
   int week = 14;
   int _selectedIndex = 0;
+  String userName = "Loading..."; // Default value
+  String userPhotoUrl = "img/ava.jpg"; // Default avatar
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      try {
+        // Ambil data dari Firestore
+        DocumentSnapshot userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .get();
+
+        setState(() {
+          // Gunakan operator null-aware dan fallback ke email jika name tidak ada
+          userName = (userDoc.data() as Map<String, dynamic>?)?['nama'] ??
+              user.email?.split('@')[0] ??
+              'Pengguna';
+
+          // Gunakan photoUrl jika ada, jika tidak gunakan default
+          userPhotoUrl =
+              (userDoc.data() as Map<String, dynamic>?)?['photoUrl'] ??
+                  "img/ava.jpg";
+        });
+      } catch (e) {
+        // Jika terjadi error, gunakan email sebagai fallback
+        setState(() {
+          userName = user.email?.split('@')[0] ?? 'Pengguna';
+          userPhotoUrl = "img/ava.jpg";
+        });
+        print("Error loading user data: $e");
+      }
+    }
+  }
 
   void _onItemTapped(int index) {
     if (index == 0) {
@@ -85,7 +114,7 @@ class _PregnancyTrackerState extends State<PregnancyTracker> {
                             ),
                           ),
                           Text(
-                            "Anisa Fitria",
+                            userName + " !",
                             style: TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
@@ -104,7 +133,9 @@ class _PregnancyTrackerState extends State<PregnancyTracker> {
                         },
                         child: CircleAvatar(
                           radius: 35,
-                          backgroundImage: AssetImage("img/ava.jpg"),
+                          backgroundImage: userPhotoUrl.startsWith('http')
+                              ? NetworkImage(userPhotoUrl) as ImageProvider
+                              : AssetImage(userPhotoUrl),
                         ),
                       ),
                     ],

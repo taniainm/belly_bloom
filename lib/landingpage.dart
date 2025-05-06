@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:belly_bloom/login.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     title: 'BellyBloom',
     home: SplashScreen(),
     routes: <String, WidgetBuilder>{
-      '/login': (BuildContext context) => HalamanSatu()
+      '/login': (BuildContext context) => LoginPage()
     },
   ));
 }
@@ -26,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(Duration(seconds: 5), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HalamanSatu()),
+        MaterialPageRoute(builder: (context) => LoginPage()),
       );
     });
   }
